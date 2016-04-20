@@ -1,0 +1,29 @@
+{
+  "name": "trapezo",
+  "version": "1.0.0",
+  "description": "NodeJS dependency injection framework.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dercetech/trapezo.git"
+  },
+  "keywords": [
+    "nodejs",
+    "dependency",
+    "injection",
+    "wiretree"
+  ],
+  "dependencies": {
+    "glob": "^7.0.3",
+    "wiretree": "^1.3.2"
+  },
+  "author": "Jérémie Mercier \"Jem\"",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Dercetech/trapezo/issues"
+  },
+  "homepage": "https://github.com/Dercetech/trapezo#readme"
+}
