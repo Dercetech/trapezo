@@ -3,6 +3,13 @@ Trapezo is a NodeJS dependency injection framework that will scan your workspace
 
 I named it "Trapezo" after the word "trapezohedral" - a shape with lots of angles. I'm an AngularJS guy and wanted to write factories/modules/DI in the same way Angular handles it.
 
+Update in v1.1: Added a root locator script. This intends you to add a "trapezo.json" at the root of your project (next to package.json) and have it contain the following:
+```
+{
+	"root"	: true
+}
+```
+
 ## Example
 Say your app is built following Jem's "MEAN-mint" skeleton (https://github.com/Dercetech/mean-mint):
 ```
@@ -55,6 +62,3 @@ module.exports = function(modelsUser) {
     };
 }
 ```
-
-## Note
-Trapezo was made after learning from Thomas Jakemyn (and his awesome Nightshift framework: https://github.com/thomas-jakemeyn).
