@@ -116,7 +116,7 @@ function resolve(aModule, callback) {
     // Obtain dependencies (paths to dep files)
     const depPaths = glob.sync('**/*.tz.js', {
       cwd: rootDir,
-      ignore: ['node_modules/**']
+      ignore: ['node_modules/**', '**/node_modules/**']
     });
 
     for (let i = 0; i < depPaths.length; i++) {
