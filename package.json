@@ -32,7 +32,6 @@
   "homepage": "https://github.com/Dercetech/trapezo#readme",
   "devDependencies": {
     "chai": "^4.2.0",
-    "cross-env": "^5.2.0",
     "eslint": "^5.12.0",
     "eslint-config-google": "^0.11.0",
     "mocha": "^5.2.0",
