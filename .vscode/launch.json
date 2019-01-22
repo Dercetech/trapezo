@@ -1,0 +1,32 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Mocha: Run all tests",
+            "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+            "args": ["-u", "tdd", "--timeout", "3000", "--colors", "${workspaceFolder}/test/**/*.js"],
+            "internalConsoleOptions": "openOnSessionStart",
+            "env": { "CFG_ENV": "unit-tests" }
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Mocha: active file",
+            "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+            "stopOnEntry": false,
+            "args": ["${file}", "--no-timeouts", "--colors"],
+            "cwd": "${workspaceRoot}",
+            "runtimeExecutable": null,
+            "env": { "CFG_ENV": "dev-tdd" }
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Debug active file",
+            "program": "${file}",
+            "env": { "CFG_ENV": "dev-tdd" }
+        }
+    ]
+}

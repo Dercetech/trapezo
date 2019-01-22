@@ -1,10 +1,11 @@
 {
   "name": "trapezo",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "NodeJS dependency injection framework.",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha **/*.spec.js",
+    "lint": "eslint src/** -o ./eslint-output.html -f html"
   },
   "repository": {
     "type": "git",
@@ -26,5 +27,13 @@
   "bugs": {
     "url": "https://github.com/Dercetech/trapezo/issues"
   },
-  "homepage": "https://github.com/Dercetech/trapezo#readme"
+  "homepage": "https://github.com/Dercetech/trapezo#readme",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "cross-env": "^5.2.0",
+    "eslint": "^5.12.0",
+    "eslint-config-google": "^0.11.0",
+    "mocha": "^5.2.0",
+    "nyc": "^13.1.0"
+  }
 }
