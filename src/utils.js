@@ -2,7 +2,13 @@ const fs = require('fs');
 const path = require('path');
 const os = require('os');
 
-const filesystemRoot = os.platform() === 'win32' ? process.cwd().split(path.sep)[0] + path.sep : '/';
+const filesystemRoot =
+  os.platform() === 'win32'
+    ? process
+        .cwd()
+        .split(path.sep)[0]
+        .toLowerCase() + path.sep
+    : '/';
 
 const _lookForRootSync = (aPath, callback) => {
   const fullPath = path.join(aPath, 'trapezo.json');

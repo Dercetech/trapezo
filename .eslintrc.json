@@ -10,7 +10,7 @@
   "rules": {
     "arrow-parens": ["error", "as-needed"],
     "comma-dangle": ["error", "never"],
-    "indent": ["error", 2, { "SwitchCase": 1 }],
+    "indent": "off",
     "max-len": ["error", { "code": 140 }],
     "object-curly-spacing": ["error", "always"],
     "require-jsdoc": "off"
