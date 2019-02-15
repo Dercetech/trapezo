@@ -1,43 +1,60 @@
 // Anti-corruption layer to abstract DI library's API
-// class conversion is not within scope
 
+// class conversion is not within scope
 // eslint-disable-next-line
-function WiretreeDependencyManager() {
-  // Wiretree wrapper: Initialize the dependency tree
+function DependencyManager() {
   const Wiretree = require('wiretree');
   this.tree = new Wiretree();
   this.verbose = false;
+  this.providers = null;
 }
 
-WiretreeDependencyManager.prototype.setVerbose = function(isVerbose) {
+DependencyManager.prototype.setVerbose = function(isVerbose) {
   this.verbose = isVerbose;
 };
 
+// Programmatic injection of factories (useful for mock/tests)
+DependencyManager.prototype.setProviders = function(providers) {
+  this.providers = providers;
+  const self = this;
+  Object.keys(this.providers)
+    .map(key => ({ key, factory: this.providers[key] }))
+    .forEach(({ key, factory }) => {
+      self.tree.add(key, { wiretree: factory });
+    });
+};
+
 // Register the dependency and always defer its resolution
-WiretreeDependencyManager.prototype.register = function(name, object) {
-  // Wiretree wrapper
-  if (this.verbose) {
-    console.log(`[trapezo] registering ${name}`);
+DependencyManager.prototype.register = function(name, object) {
+  // Case1: Dependency was provided/mocked already
+  if (this.providers && this.providers.hasOwnProperty(name)) {
+    if (this.verbose) {
+      console.log(`[trapezo] skipping dependency ${name} as it was provided beforehand`);
+    }
   }
-  this.tree.add(name, { wiretree: object });
+  // Case2: Dependency must be registered
+  else {
+    if (this.verbose) {
+      console.log(`[trapezo] registering ${name}`);
+    }
+    this.tree.add(name, { wiretree: object });
+  }
 };
 
 // Obtain a dependency by name
-WiretreeDependencyManager.prototype.get = function(name) {
-  // Wiretree wrapper
+DependencyManager.prototype.get = function(name) {
   let plugin = null;
   try {
     plugin = this.tree.get(name);
   } catch (exc) {
-    console.log('[trapezo > wirtree adapter] Dependency not found: ' + name);
+    console.log('[trapezo > tree adapter] Dependency not found: ' + name);
   }
   return plugin;
 };
 
 // Register the dependency and always defer its resolution
-WiretreeDependencyManager.prototype.onResolve = function(callback) {
-  // Wiretree wrapper
+DependencyManager.prototype.onResolve = function(callback) {
   this.tree.resolve(callback);
 };
 
-module.exports = WiretreeDependencyManager;
+module.exports = DependencyManager;

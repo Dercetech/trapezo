@@ -13,8 +13,8 @@ const glob = require('glob');
 const path = require('path');
 
 const DependencyManager = require('./dependency-manager');
-const { filesystem, functionHelpers } = require('./utils');
-const { lookForRoot } = filesystem;
+const { project, lang, functionHelpers } = require('./utils');
+const { lookForRoot } = project;
 const { getParameterNames, bindWithParams } = functionHelpers;
 
 /**
@@ -23,7 +23,13 @@ const { getParameterNames, bindWithParams } = functionHelpers;
  */
 const listDependencies = cwd => glob.sync('**/*.tz.js', { cwd, ignore: ['node_modules/**', '**/node_modules/**'] });
 
-const resolve = (aModule, callback) => {
+const provide = providers => {
+  const injector = new DependencyManager();
+  injector.setProviders(providers);
+  return { resolve: (aModule, callback) => resolve(aModule, injector, callback) };
+};
+
+const resolve = (aModule, injectorOrCallback, callback) => {
   // Look upwards from provided module for a dependency-injector.json config file (locates the project root)
   const thisPath = path.dirname(aModule ? aModule.filename : module.filename);
 
@@ -33,7 +39,28 @@ const resolve = (aModule, callback) => {
       console.log(`[dependency injector] Resolution root: ${rootDir}`);
     }
 
-    const injector = new DependencyManager();
+    let injector = null;
+
+    // Ensure proper parameter combination
+    // 1. An overloaded injector was provided
+    if (callback) {
+      if (!lang.isFunction(callback)) {
+        throw new Error('[resolve] the 3rd parameter must be a function');
+      }
+      if (injectorOrCallback) {
+        injector = injectorOrCallback;
+      }
+    }
+    // 2. A default injector is to be created
+    else {
+      if (!lang.isFunction(injectorOrCallback)) {
+        throw new Error('[resolve] when only 2 params are provided, the second must be a function');
+      }
+      callback = injectorOrCallback;
+    }
+
+    // Unless mocks are used (via a call to .provide), a dependency manager should be instanciated now.
+    injector = injector ? injector : new DependencyManager();
     injector.setVerbose(config.verbose);
 
     // Obtain dependencies (paths to dep files)
@@ -69,4 +96,4 @@ const resolve = (aModule, callback) => {
   });
 };
 
-module.exports = { listDependencies, resolve };
+module.exports = { listDependencies, provide, resolve };

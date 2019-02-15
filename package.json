@@ -1,11 +1,11 @@
 {
   "name": "trapezo",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "NodeJS dependency injection framework.",
   "main": "src/index.js",
   "scripts": {
     "test": "mocha test/**/*.spec.js",
-    "cover": "nyc report mocha -- test/**/*.spec.js",
+    "cover": "nyc npm test",
     "cover:html": "nyc report --reporter=html mocha -- test/**/*.spec.js",
     "lint": "eslint src/** -o ./eslint-output.html -f html"
   },
@@ -28,6 +28,14 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Dercetech/trapezo/issues"
+  },
+  "nyc": {
+    "include": [
+      "src/**/*.js"
+    ],
+    "exclude": [
+      "test/*.spec.js"
+    ]
   },
   "homepage": "https://github.com/Dercetech/trapezo#readme",
   "devDependencies": {

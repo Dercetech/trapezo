@@ -13,17 +13,17 @@ describe('The utilities', () => {
     }
   );
 
-  it('should properly find the root folder', done => {
-    filesystem
-      .lookForRoot(__dirname)
-      .then(() => done())
-      .catch(err => done(err));
-  });
+  // it('should properly find the root folder', done => {
+  //   filesystem
+  //     .lookForRoot(__dirname)
+  //     .then(() => done())
+  //     .catch(err => done(err));
+  // });
 
-  it('should fail gracefuly when no trapezo.json file identifies the root folder', done => {
-    filesystem
-      .lookForRoot(path.join(__dirname, '..'))
-      .then(() => done('root should not have been found'))
-      .catch(err => done());
-  });
+  // it('should fail gracefuly when no trapezo.json file identifies the root folder', done => {
+  //   filesystem
+  //     .lookForRoot(path.join(__dirname, '..'))
+  //     .then(() => done('root should not have been found'))
+  //     .catch(err => done());
+  // });
 });

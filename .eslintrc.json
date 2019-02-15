@@ -9,10 +9,12 @@
   },
   "rules": {
     "arrow-parens": ["error", "as-needed"],
+    "brace-style": "off",
     "comma-dangle": ["error", "never"],
     "indent": "off",
     "max-len": ["error", { "code": 140 }],
     "object-curly-spacing": ["error", "always"],
+    "padded-blocks": "off",
     "require-jsdoc": "off"
   }
 }

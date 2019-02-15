@@ -28,7 +28,47 @@ describe('The Dependency Injection engine', () => {
 
   it('should find project root');
   it('should fail gracefully');
-  it('should handle async dependencies');
-  it('should ignore node_modules');
-  it('allows mocking dependencies');
+
+  it('should handle async dependencies', done => {
+    const t0 = new Date().getTime();
+    dependencyInjectionEngine.resolve(module, function(asyncDeps) {
+      const t1 = new Date().getTime();
+      const delta = t1 - t0;
+      delta.should.be.greaterThan(100);
+
+      asyncDeps.canIHaz().should.equal('cheezburger');
+      done();
+    });
+  });
+
+  it('allows mocking existing dependencies', done => {
+    const t0 = new Date().getTime();
+    dependencyInjectionEngine
+      .provide({
+        asyncDeps: () => ({
+          canIHaz: () => 'marmite' // it tastes awesome
+        })
+      })
+      .resolve(module, function(asyncDeps) {
+        const t1 = new Date().getTime();
+        const delta = t1 - t0;
+        delta.should.be.lessThan(10); // as actual dependency willfully takes 100ms to resolve
+
+        asyncDeps.canIHaz().should.equal('marmite');
+        done();
+      });
+  });
+
+  it('allows mocking runtime dependencies', done => {
+    dependencyInjectionEngine
+      .provide({
+        runtimeDependency: () => ({
+          groundhogDay: () => 'Hello campers' // it tastes awesome
+        })
+      })
+      .resolve(module, function(runtimeDependency) {
+        runtimeDependency.groundhogDay().should.equal('Hello campers');
+        done();
+      });
+  });
 });
