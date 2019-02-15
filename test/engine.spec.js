@@ -26,6 +26,13 @@ describe('The Dependency Injection engine', () => {
     });
   });
 
+  it('should resolve with verbose ', done => {
+    dependencyInjectionEngine.provide(null, { verbose: true }).resolve(module, function(hasDeps) {
+      hasDeps.herp().should.equal(4);
+      done();
+    });
+  });
+
   it('should find project root');
   it('should fail gracefully');
 
